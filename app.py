@@ -1,10 +1,22 @@
+# uvicorn app:app --host 0.0.0.0 --port 5000 --reload
 from fastapi import FastAPI
-from src.api.v1.endpoints.transformation import router as transformation_router
-from src.database.session import engine
-from src.database.base import Base
+from fastapi.middleware.cors import CORSMiddleware
+from src.api.v1.endpoints.transformation import router
+from src.core.config import settings
+import logging
 
-Base.metadata.create_all(bind=engine)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-app = FastAPI()
+app = FastAPI(title="ETL Extraction Microservice")
 
-app.include_router(transformation_router, prefix="/api/v1")
+app.include_router(router, prefix=settings.API_V1_STR)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"],
+)

@@ -8,9 +8,8 @@ class JobStatusEnum(str, Enum):
     FAILED = "failed"
 
 class TransformationJobCreate(BaseModel):
-    extraction_job_id: int
-    # Otros campos relevantes
+    extraction_job_id: str
 
 class TransformationJobStatus(BaseModel):
-    id: int
+    id: str
     status: JobStatusEnum
