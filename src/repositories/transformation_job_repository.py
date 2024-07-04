@@ -11,10 +11,10 @@ class TransformationJobRepository:
         self.db.refresh(job)
         return job
 
+    def get(self, job_id: int) -> TransformationJob:
+        return self.db.query(TransformationJob).filter(TransformationJob.id == job_id).first()
+
     def update(self, job: TransformationJob) -> TransformationJob:
         self.db.commit()
         self.db.refresh(job)
         return job
-
-    def get(self, job_id: int) -> TransformationJob:
-        return self.db.query(TransformationJob).filter(TransformationJob.id == job_id).first()

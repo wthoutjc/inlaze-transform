@@ -11,6 +11,6 @@ class JobStatus(PyEnum):
 class TransformationJob(Base):
     __tablename__ = "transformation_jobs"
 
-    id = Column(String, primary_key=True, default=str(uuid.uuid4))
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     extraction_job_id = Column(String, index=True)
     status = Column(Enum(JobStatus), default=JobStatus.PENDING)
